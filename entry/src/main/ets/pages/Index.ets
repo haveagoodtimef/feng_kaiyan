@@ -3,7 +3,7 @@
 struct Index {
   @State message: string = 'Hello World';
 
-  //index
+  //index 完成
   build() {
     RelativeContainer() {
       Text(this.message)
