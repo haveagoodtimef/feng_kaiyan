@@ -1,13 +1,12 @@
 @Entry
 @Component
-struct Index {
+export struct FindPage {
   @State message: string = 'Hello World';
 
-  //index 完成
   build() {
     RelativeContainer() {
       Text(this.message)
-        .id('HelloWorld')
+        .id('FindPageHelloWorld')
         .fontSize(50)
         .fontWeight(FontWeight.Bold)
         .alignRules({
