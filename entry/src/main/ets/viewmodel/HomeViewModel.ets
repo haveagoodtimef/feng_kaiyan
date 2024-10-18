@@ -4,15 +4,7 @@ import { HomeModelIssueListItemList } from '../model/HomeModel';
 import { BaseViewModel, ResultCallback } from './BaseViewModel';
 
 export class HomeViewModel extends BaseViewModel {
-  private date: string = ""
 
-  revertDate() {
-    this.date = ""
-  }
-
-  getDate() {
-    return this.date
-  }
   /**
    * 获取首页列表数据-axios客户端请求
    * @param stateCallback  状态返回
@@ -20,18 +12,17 @@ export class HomeViewModel extends BaseViewModel {
    */
   async getHomeList(resultCallback?: ResultCallback<HomeModelIssueListItemList[]>) {
     await this.httpRequest()
-      .promise(getHomeListAxios(this.date), this.date == "" ? true : false)
+      .promise(getHomeListAxios())
       .then(result => {
         let items = result.issueList[0].itemList
         let list = items.filter((item) => item.type == "video")
-        if (this.date == "") {
-          let bannerList: HomeModelIssueListItemList[]
-          let bannerBean: HomeModelIssueListItemList = {}
-          bannerList = items.filter((item) => item.type == "banner2")
-          if (bannerList.length > 0) {
-            bannerBean = { bannerList: bannerList, type: "banner" }
-            list.unshift(bannerBean)
-          }
+
+        let bannerList: HomeModelIssueListItemList[]
+        let bannerBean: HomeModelIssueListItemList = {}
+        bannerList = items.filter((item) => item.type == "banner2")
+        if (bannerList.length > 0) {
+          bannerBean = { bannerList: bannerList, type: "banner" }
+          list.unshift(bannerBean)
         }
         resultCallback?.(list)
         this.spliteDate(result.nextPageUrl)
@@ -44,7 +35,6 @@ export class HomeViewModel extends BaseViewModel {
     let split2 = split[1];
     let split3 = split2.split("&");
     let split4 = split3[0].split("=");
-    this.date = split4[1]
   }
 }
 

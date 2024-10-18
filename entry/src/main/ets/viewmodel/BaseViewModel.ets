@@ -9,17 +9,13 @@ export type ResultCallback<T> = (result: T) => void
 
 
 export class BaseViewModel {
-  private stateCallback?: StateCallback
 
-  observeState(stateCallback: StateCallback) {
-    this.stateCallback = stateCallback
-  }
 
-  dispatchViewState(state: string) {
-    this.stateCallback?.(state)
-  }
-
-  httpRequest(checkResult?: boolean): LoadStateResult {
-    return useRequestStatus((state): void => this.dispatchViewState(state), checkResult)
+  /**
+   * 发起网络请求的功能
+   * @returns
+   */
+  httpRequest(): LoadStateResult {
+    return useRequestStatus()
   }
 }

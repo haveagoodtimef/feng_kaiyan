@@ -35,25 +35,11 @@ export struct HomePage {
   isSUbscribe: boolean = true
 
   aboutToAppear(): void {
-    HomeViewModel.observeState(state => {
-      this.viewState = state
+    HomeViewModel.getHomeList((result) => {
+      this.dataList = result
     })
-    this.load()
   }
 
-  load(){
-    HomeViewModel.getHomeList(
-      (result) => {
-        this.isRefreshing = false
-        this.showLoading = false
-        if (HomeViewModel.getDate() == "") {
-          this.dataList = result
-          console.log("12")
-        } else {
-          this.dataList = [...this.dataList, ...result]
-        }
-      })
-  }
 
   test(){
     // axiosClient.get<HomeModel>({
@@ -143,13 +129,6 @@ export struct HomePage {
     Column(){
       CommonTopBar({ title: "首页", backButton: false, alpha: 1 }).align(Alignment.TopStart)
       Stack(){
-        StateComponent({
-          viewState: this.viewState,
-          showSkeleton: true,
-          retryCallback: () => {
-            //this.loadNet()
-          }
-        }){
           Refresh({ refreshing: $$this.isRefreshing, offset: 100, friction: 100 }) {
             List({ space: 10, initialIndex: 0 }) {
               ForEach(this.dataList, (item: HomeModelIssueListItemList, index: number) => {
@@ -162,7 +141,6 @@ export struct HomePage {
                   })
                 }
               })
-            }
           }
         }
       }.layoutWeight(1)
