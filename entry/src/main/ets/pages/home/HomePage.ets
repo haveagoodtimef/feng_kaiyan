@@ -26,8 +26,7 @@ const commonHeader: AxiosHeaders = new AxiosHeaders()
 @Entry
 @Component
 export struct HomePage {
-  @State message: string = 'Hello World';
-  @State viewState: string = ViewStateConstant.VIEW_STATE_LOADING
+
   @State dataList: HomeModelIssueListItemList[] = []
   @State showLoading: boolean = false
   @State isRefreshing: boolean = false
@@ -62,8 +61,6 @@ export struct HomePage {
     //   console.info("res" +  JSON.stringify(res))
     // })
   }
-
-
 
   getHomeListAxios(page: number = 1) {
     let instance  = axios.create({

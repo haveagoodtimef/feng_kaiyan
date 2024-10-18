@@ -1,4 +1,4 @@
-import useRequestStatus, { LoadStateResult } from '../http/useRequestStatus'
+import { CommonType } from '../model/typeAlias/TypeAlias'
 
 export type StateCallback = (state: string) => void
 
@@ -15,7 +15,14 @@ export class BaseViewModel {
    * 发起网络请求的功能
    * @returns
    */
-  httpRequest(): LoadStateResult {
-    return useRequestStatus()
+  httpRequest <T> (requestPromise: Promise<T>): Promise<T> {
+    return new Promise<T>((resolve, reject) => {
+      requestPromise.then((res) => {
+        resolve(res);
+      }).catch((error: CommonType) => {
+        reject(error);
+      })
+    })
   }
+
 }
