@@ -3,6 +3,7 @@
     "pages/MainPage",
     "pages/SplashPage",
     "pages/home/HomePage",
-    "pages/find/FindPage"
+    "pages/find/FindPage",
+    "pages/commonDetail/DetailPage"
   ]
 }
